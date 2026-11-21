@@ -1,4 +1,6 @@
 import { NavLink, Outlet } from 'react-router'
+import { Container } from '@/components/Container'
+import { SpaceBackground } from '@/components/SpaceBackground'
 
 const links = [
   { to: '/', label: 'Inicio' },
@@ -12,34 +14,36 @@ const links = [
 
 export default function RootLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <header className="border-b border-white/10">
-        <nav
-          aria-label="Principal"
-          className="mx-auto flex max-w-5xl flex-wrap gap-x-6 gap-y-2 px-6 py-4"
-        >
-          {links.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/'}
-              className={({ isActive }) =>
-                isActive ? 'text-sky-400' : 'text-white/70 hover:text-white'
-              }
-            >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-      </header>
+    <>
+      <SpaceBackground />
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <header className="border-b border-moon-100/10">
+          <Container>
+            <nav aria-label="Principal" className="flex flex-wrap gap-x-6 gap-y-2 py-4 text-sm">
+              {links.map(({ to, label }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  className={({ isActive }) =>
+                    isActive ? 'text-aurora-400' : 'text-moon-300 hover:text-moon-100'
+                  }
+                >
+                  {label}
+                </NavLink>
+              ))}
+            </nav>
+          </Container>
+        </header>
 
-      <main className="flex-1">
-        <Outlet />
-      </main>
+        <main className="flex-1">
+          <Outlet />
+        </main>
 
-      <footer className="border-t border-white/10 px-6 py-6 text-sm text-white/50">
-        © 2026 Galería fotográfica
-      </footer>
-    </div>
+        <footer className="border-t border-moon-100/10 py-6 text-sm text-moon-300">
+          <Container>© 2026 Galería fotográfica</Container>
+        </footer>
+      </div>
+    </>
   )
 }
