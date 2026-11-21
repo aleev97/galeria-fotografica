@@ -6,3 +6,7 @@ export const collections: { id: Collection; name: string; description: string }[
   { id: 'wildlife', name: 'VIDA', description: 'Animales en su entorno natural.' },
   { id: 'details', name: 'DETALLES', description: 'Texturas y pequeños mundos.' },
 ]
+
+export function isCollection(value: string | null): value is Collection {
+  return collections.some((collection) => collection.id === value)
+}
