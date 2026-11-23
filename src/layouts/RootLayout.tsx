@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router'
 import { Container } from '@/components/Container'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { SpaceBackground } from '@/components/SpaceBackground'
 
 const links = [
@@ -15,6 +16,7 @@ const links = [
 export default function RootLayout() {
   return (
     <>
+      <ScrollToTop />
       <SpaceBackground />
       <div className="relative z-10 flex min-h-screen flex-col">
         <header className="border-b border-moon-100/10">

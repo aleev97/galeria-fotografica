@@ -24,3 +24,19 @@ export function getFeaturedPhotos(): Photo[] {
 export function getPhotosByCollection(collection: Collection): Photo[] {
   return getPhotos({ collection })
 }
+
+export function getPhotoById(id: string): Photo | undefined {
+  return samplePhotos.find((photo) => photo.id === id)
+}
+
+export function getAdjacentPhotos(id: string): { previous?: Photo; next?: Photo } {
+  const index = samplePhotos.findIndex((photo) => photo.id === id)
+  if (index === -1) return {}
+  return { previous: samplePhotos[index - 1], next: samplePhotos[index + 1] }
+}
+
+export function getPhotosByIds(ids: string[]): Photo[] {
+  return ids
+    .map((id) => getPhotoById(id))
+    .filter((photo): photo is Photo => photo !== undefined)
+}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { FavoriteButton } from '@/features/favorites/FavoriteButton'
 import type { Photo } from '@/types/photo'
 import { PhotoImage } from './PhotoImage'
 
@@ -6,7 +7,7 @@ export function PhotoGrid({ photos }: { photos: Photo[] }) {
   return (
     <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3">
       {photos.map((photo) => (
-        <li key={photo.id} className="mb-4 break-inside-avoid">
+        <li key={photo.id} className="relative mb-4 break-inside-avoid">
           <Link
             to={`/foto/${photo.id}`}
             className="group relative block overflow-hidden rounded-xl bg-space-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora-400"
@@ -20,6 +21,11 @@ export function PhotoGrid({ photos }: { photos: Photo[] }) {
               {photo.title}
             </span>
           </Link>
+          <FavoriteButton
+            photoId={photo.id}
+            title={photo.title}
+            className="absolute right-3 top-3"
+          />
         </li>
       ))}
     </ul>

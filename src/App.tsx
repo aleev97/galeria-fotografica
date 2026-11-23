@@ -8,6 +8,7 @@ import ExplorerPage from '@/pages/ExplorerPage'
 import FavoritesPage from '@/pages/FavoritesPage'
 import HomePage from '@/pages/HomePage'
 import NotFoundPage from '@/pages/NotFoundPage'
+import PhotoPage from '@/pages/PhotoPage'
 import { MotionConfig } from 'motion/react'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="sobre-mi" element={<AboutPage />} />
             <Route path="favoritos" element={<FavoritesPage />} />
             <Route path="contacto" element={<ContactPage />} />
+            <Route path="foto/:id" element={<PhotoPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
