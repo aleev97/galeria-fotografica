@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-11-24"
+  "compatibility_date": "2026-11-24",
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -35,4 +35,12 @@
   //   "enabled": true,
   //   "head_sampling_rate": 1
   // }
+    "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "astrogaia-db",
+      "database_id": "local-placeholder",
+      "migrations_dir": "migrations"
+    }
+  ]
 }
