@@ -10,6 +10,7 @@ export const photosRoute = new Hono<{ Bindings: CloudflareBindings }>()
       collection: params.collection,
       query: params.q,
       featured: params.featured === undefined ? undefined : params.featured === 'true',
+      ids: params.ids,
       limit: params.limit,
       offset: params.offset,
     })
@@ -18,8 +19,8 @@ export const photosRoute = new Hono<{ Bindings: CloudflareBindings }>()
   })
   .get('/:id', validate('param', photoIdParam), async (c) => {
     const { id } = c.req.valid('param')
-    const photo = await getPhoto(c.env.DB, id)
-    if (!photo) return c.json({ error: 'not_found' }, 404)
+    const result = await getPhoto(c.env.DB, id)
+    if (!result) return c.json({ error: 'not_found' }, 404)
     c.header('Cache-Control', 'public, max-age=60')
-    return c.json({ photo })
+    return c.json(result)
   })
