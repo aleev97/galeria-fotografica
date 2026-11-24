@@ -1,15 +1,25 @@
+import type { CollectionListResponse } from '@astrogaia/shared'
 import { Link } from 'react-router'
+import { ErrorMessage, LoadingMessage } from '@/components/StatusMessage'
 import { Reveal } from '@/components/Reveal'
-import { getPhotosByCollection } from '@/services/photos'
+import { useApi } from '@/hooks/useApi'
 import { collections } from './collections'
 import { PhotoImage } from './PhotoImage'
 
 export function CollectionCards() {
+  const state = useApi<CollectionListResponse>('/collections')
+
+  if (state.status === 'loading') return <LoadingMessage />
+  if (state.status === 'error') return <ErrorMessage />
+
+  const summaries = new Map(state.data.items.map((item) => [item.id, item]))
+
   return (
     <ul className="grid gap-6 sm:grid-cols-2">
       {collections.map((collection, index) => {
-        const photos = getPhotosByCollection(collection.id)
-        const cover = photos[0]
+        const summary = summaries.get(collection.id)
+        const cover = summary?.cover
+        const count = summary?.count ?? 0
 
         return (
           <li key={collection.id}>
@@ -29,7 +39,7 @@ export function CollectionCards() {
                   <h3 className="text-2xl tracking-widest">{collection.name}</h3>
                   <p className="mt-1 text-sm text-moon-300">{collection.description}</p>
                   <p className="mt-2 text-xs text-moon-300">
-                    {photos.length} {photos.length === 1 ? 'fotografía' : 'fotografías'}
+                    {count} {count === 1 ? 'fotografía' : 'fotografías'}
                   </p>
                 </div>
               </Link>

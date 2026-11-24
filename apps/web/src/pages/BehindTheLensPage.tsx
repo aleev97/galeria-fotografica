@@ -2,7 +2,8 @@
 import { Container } from '@/components/Container'
 import { siteConfig } from '@/config/site'
 import { PhotoImage } from '@/features/gallery/PhotoImage'
-import { getPhotoById } from '@/services/photos'
+import { useApi } from '@/hooks/useApi'
+import type { PhotoDetailResponse } from '@astrogaia/shared'
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -14,7 +15,10 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export default function BehindTheLensPage() {
-  const storyPhoto = getPhotoById(siteConfig.storyPhotoId)
+ const story = useApi<PhotoDetailResponse>(
+  siteConfig.storyPhotoId ? `/photos/${encodeURIComponent(siteConfig.storyPhotoId)}` : null,
+)
+const storyPhoto = story.status === 'success' ? story.data.photo : null
 
   return (
     <Container className="py-24">

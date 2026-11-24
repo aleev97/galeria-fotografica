@@ -21,6 +21,7 @@ export function GalleryFilters({ query, collection, onQueryChange, onCollectionC
         </label>
         <input
           id="search"
+          maxLength={100}
           type="search"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}

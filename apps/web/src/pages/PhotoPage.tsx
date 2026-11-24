@@ -1,20 +1,23 @@
+import type { PhotoDetailResponse } from '@astrogaia/shared'
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { buttonStyles } from '@/components/buttonStyles'
 import { Container } from '@/components/Container'
 import { ShareButton } from '@/components/ShareButton'
+import { ErrorMessage, LoadingMessage } from '@/components/StatusMessage'
 import { FavoriteButton } from '@/features/favorites/FavoriteButton'
 import { collections } from '@/features/gallery/collections'
 import { PhotoImage } from '@/features/gallery/PhotoImage'
-import { getAdjacentPhotos, getPhotoById } from '@/services/photos'
+import { useApi } from '@/hooks/useApi'
 
 export default function PhotoPage() {
   const { id = '' } = useParams()
   const navigate = useNavigate()
+  const state = useApi<PhotoDetailResponse>(id ? `/photos/${encodeURIComponent(id)}` : null)
 
-  const photo = getPhotoById(id)
-  const { previous, next } = getAdjacentPhotos(id)
+  const previous = state.status === 'success' ? state.data.previous : null
+  const next = state.status === 'success' ? state.data.next : null
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -25,11 +28,27 @@ export default function PhotoPage() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [navigate, previous, next])
 
-  if (!photo) {
+  if (state.status === 'loading') {
     return (
       <Container className="py-24">
-        <h1 className="text-4xl">Fotografía no encontrada</h1>
-        <p className="mt-4 text-moon-300">Puede que el enlace sea incorrecto o que ya no exista.</p>
+        <LoadingMessage />
+      </Container>
+    )
+  }
+
+  if (state.status === 'error') {
+    return (
+      <Container className="py-24">
+        {state.notFound ? (
+          <>
+            <h1 className="text-4xl">Fotografía no encontrada</h1>
+            <p className="mt-4 text-moon-300">
+              Puede que el enlace sea incorrecto o que ya no exista.
+            </p>
+          </>
+        ) : (
+          <ErrorMessage />
+        )}
         <Link to="/explorador" className={`${buttonStyles('primary')} mt-8`}>
           Ir al explorador
         </Link>
@@ -37,11 +56,12 @@ export default function PhotoPage() {
     )
   }
 
+  const { photo } = state.data
   const collectionName = collections.find((item) => item.id === photo.collection)?.name
 
   return (
     <Container className="py-12">
-      <title>{`${photo.title} | AstroGaia`}</title>
+      <title>{`${photo.title} | Astrogaia`}</title>
 
       <Link
         to="/explorador"
