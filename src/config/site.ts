@@ -1,6 +1,7 @@
 export const siteConfig = {
-    name: 'Galería Fotográfica',
+    name: 'AstroGaia',
     instagramHandle: '@astrogaia.ok',
     instagramUrl: 'https://www.instagram.com/astrogaia.ok/',
     contactEmail: '',
+    storyPhotoId: '',
 }

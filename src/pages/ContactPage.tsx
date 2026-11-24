@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site'
 export default function ContactPage() {
   return (
     <Container className="py-24">
-      <title>Contacto | Galería fotográfica</title>
+      <title>Contacto | AstroGaia</title>
 
       <div className="max-w-3xl">
         <h1 className="text-4xl md:text-5xl">Contacto</h1>

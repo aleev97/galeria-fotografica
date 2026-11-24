@@ -43,7 +43,7 @@ export default function RootLayout() {
         </main>
 
         <footer className="border-t border-moon-100/10 py-6 text-sm text-moon-300">
-          <Container>© 2026 Galería fotográfica</Container>
+          <Container>© 2026 AstroGaia</Container>
         </footer>
       </div>
     </>

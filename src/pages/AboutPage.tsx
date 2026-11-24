@@ -5,7 +5,7 @@ import { Container } from '@/components/Container'
 export default function AboutPage() {
   return (
     <Container className="py-24">
-      <title>Sobre mí | Galería fotográfica</title>
+      <title>Sobre mí | AstroGaia</title>
       <div className="max-w-3xl">
         <h1 className="text-4xl md:text-5xl">Sobre mí</h1>
         <div className="mt-8 space-y-6 text-lg leading-relaxed text-moon-300">

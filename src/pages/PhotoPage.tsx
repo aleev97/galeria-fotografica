@@ -41,7 +41,7 @@ export default function PhotoPage() {
 
   return (
     <Container className="py-12">
-      <title>{`${photo.title} | Galería fotográfica`}</title>
+      <title>{`${photo.title} | AstroGaia`}</title>
 
       <Link
         to="/explorador"

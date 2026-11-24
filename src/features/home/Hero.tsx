@@ -28,7 +28,7 @@ export function Hero() {
             Fotografía personal
           </motion.p>
           <motion.h1 variants={item} className="text-5xl md:text-7xl lg:text-8xl">
-            Galería fotográfica
+            AstroGaia
           </motion.h1>
           <motion.p variants={item} className="max-w-xl text-lg text-moon-300">
             Fotografías del cielo, la Tierra y los detalles que casi nadie mira.
