@@ -10,6 +10,7 @@ import HomePage from '@/pages/HomePage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import PhotoPage from '@/pages/PhotoPage'
 import { MotionConfig } from 'motion/react'
+import AdminPage from '@/pages/AdminPage'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="contacto" element={<ContactPage />} />
             <Route path="foto/:id" element={<PhotoPage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="admin" element={<AdminPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

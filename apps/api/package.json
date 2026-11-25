@@ -9,7 +9,8 @@
     "db:migrate:local": "wrangler d1 migrations apply astrogaia-db --local",
     "db:seed:generate": "node scripts/generate-seed.mjs",
     "db:seed:local": "wrangler d1 execute astrogaia-db --local --file=seeds/dev.sql",
-    "db:tables:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT name FROM sqlite_master WHERE type='table'\""
+    "db:tables:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT name FROM sqlite_master WHERE type='table'\"",
+    "db:audit:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT at, action, detail FROM audit_log ORDER BY id DESC LIMIT 20\""
   },
   "dependencies": {
     "@hono/zod-validator": "^0.9.1",
