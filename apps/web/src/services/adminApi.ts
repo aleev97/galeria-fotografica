@@ -14,3 +14,13 @@ export async function patchAdminPhoto(id: string, input: UpdatePhotoInput): Prom
   )
   return photo
 }
+
+export async function moveAdminPhoto(id: string, direction: 'up' | 'down'): Promise<void> {
+  await sendJson<{ ok: true }>('POST', `/admin/photos/${encodeURIComponent(id)}/move`, {
+    direction,
+  })
+}
+
+export async function deleteAdminPhoto(id: string): Promise<void> {
+  await sendJson<{ ok: true }>('DELETE', `/admin/photos/${encodeURIComponent(id)}`)
+}

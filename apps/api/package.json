@@ -10,7 +10,8 @@
     "db:seed:generate": "node scripts/generate-seed.mjs",
     "db:seed:local": "wrangler d1 execute astrogaia-db --local --file=seeds/dev.sql",
     "db:tables:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT name FROM sqlite_master WHERE type='table'\"",
-    "db:audit:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT at, action, detail FROM audit_log ORDER BY id DESC LIMIT 20\""
+    "db:audit:local": "wrangler d1 execute astrogaia-db --local --command \"SELECT at, action, detail FROM audit_log ORDER BY id DESC LIMIT 20\"",
+    "db:import:local": "wrangler d1 execute astrogaia-db --local"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.9.1",

@@ -29,7 +29,7 @@ export async function fetchJson<T>(path: string, signal?: AbortSignal): Promise<
 }
 
 export async function sendJson<T>(
-  method: 'PATCH' | 'POST',
+  method: 'PATCH' | 'POST' | 'DELETE',
   path: string,
   body?: unknown,
 ): Promise<T> {

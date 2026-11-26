@@ -9,6 +9,7 @@ import { collections } from '@/features/gallery/collections'
 import { PhotoImage } from '@/features/gallery/PhotoImage'
 import { useApi } from '@/hooks/useApi'
 import { patchAdminPhoto } from '@/services/adminApi'
+import { DeleteSection } from '@/features/admin/DeleteSection'
 
 const fieldClass =
   'mt-2 w-full rounded-lg border border-moon-100/30 bg-space-900 px-4 py-3 text-moon-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-aurora-400'
@@ -43,7 +44,8 @@ function PhotoForm({ photo }: { photo: AdminPhoto }) {
         <PhotoImage photo={photo} sizes="288px" className="h-auto w-full" />
       </div>
 
-      <form onSubmit={onSubmit} className="flex max-w-2xl flex-col gap-6">
+    <div className="flex max-w-2xl flex-col gap-12">
+      <form onSubmit={onSubmit} className="flex flex-col gap-6">
         <div>
           <label htmlFor="title">Título</label>
           <input
@@ -128,6 +130,8 @@ function PhotoForm({ photo }: { photo: AdminPhoto }) {
           )}
         </div>
       </form>
+        <DeleteSection photoId={photo.id} />
+    </div>
     </div>
   )
 }

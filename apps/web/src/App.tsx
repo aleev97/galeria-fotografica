@@ -1,6 +1,6 @@
 import { MotionConfig } from 'motion/react'
 import { BrowserRouter, Route, Routes } from 'react-router'
-
+import { AdminProvider } from '@/features/admin/AdminProvider'
 import { AdminGate } from '@/features/admin/AdminGate'
 import RootLayout from '@/layouts/RootLayout'
 import AboutPage from '@/pages/AboutPage'
@@ -19,6 +19,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
+       <AdminProvider>
         <Routes>
           <Route element={<RootLayout />}>
             <Route index element={<HomePage />} />
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
+      </AdminProvider>
       </BrowserRouter>
     </MotionConfig>
   )

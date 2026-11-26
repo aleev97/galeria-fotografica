@@ -25,3 +25,7 @@ export const updatePhotoBody = z
   .refine((body) => Object.values(body).some((value) => value !== undefined), {
     message: 'empty_update',
   })
+
+  export const moveBody = z.strictObject({
+  direction: z.enum(['up', 'down']),
+})

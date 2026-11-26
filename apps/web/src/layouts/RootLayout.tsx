@@ -1,7 +1,10 @@
-import { NavLink, Outlet } from 'react-router'
+import { Link, NavLink, Outlet } from 'react-router'
+
 import { Container } from '@/components/Container'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { SpaceBackground } from '@/components/SpaceBackground'
+import { AdminBar } from '@/features/admin/AdminBar'
+import { useAdmin } from '@/features/admin/adminContext'
 
 const links = [
   { to: '/', label: 'Inicio' },
@@ -14,11 +17,15 @@ const links = [
 ]
 
 export default function RootLayout() {
+  const { status } = useAdmin()
+
   return (
     <>
       <ScrollToTop />
       <SpaceBackground />
       <div className="relative z-10 flex min-h-screen flex-col">
+        <AdminBar />
+
         <header className="border-b border-moon-100/10">
           <Container>
             <nav aria-label="Principal" className="flex flex-wrap gap-x-6 gap-y-2 py-4 text-sm">
@@ -43,7 +50,14 @@ export default function RootLayout() {
         </main>
 
         <footer className="border-t border-moon-100/10 py-6 text-sm text-moon-300">
-          <Container>© 2026 AstroGaia</Container>
+          <Container className="flex flex-wrap items-center justify-between gap-4">
+            <span>© 2026 Astrogaia</span>
+            {status === 'guest' && (
+              <Link to="/admin" className="text-xs text-moon-300/60 hover:text-moon-100">
+                Acceso
+              </Link>
+            )}
+          </Container>
         </footer>
       </div>
     </>

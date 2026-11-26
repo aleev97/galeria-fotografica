@@ -77,3 +77,44 @@ export async function updatePhoto(
     .bind(...values, id)
     .run()
 }
+
+export type MoveOutcome = 'moved' | 'edge' | 'not_found'
+
+/** Intercambia el orden de una foto con su vecina inmediata */
+export async function swapWithNeighbour(
+  db: D1Database,
+  id: string,
+  direction: 'up' | 'down',
+): Promise<MoveOutcome> {
+  const current = await db
+    .prepare('SELECT id, sort_order FROM photos WHERE id = ?')
+    .bind(id)
+    .first<{ id: string; sort_order: number }>()
+  if (!current) return 'not_found'
+
+  const neighbourSql =
+    direction === 'up'
+      ? 'SELECT id, sort_order FROM photos WHERE sort_order < ? ORDER BY sort_order DESC LIMIT 1'
+      : 'SELECT id, sort_order FROM photos WHERE sort_order > ? ORDER BY sort_order ASC LIMIT 1'
+
+  const neighbour = await db
+    .prepare(neighbourSql)
+    .bind(current.sort_order)
+    .first<{ id: string; sort_order: number }>()
+  if (!neighbour) return 'edge'
+
+  // Las dos actualizaciones se ejecutan juntas: o se hacen las dos o ninguna
+  await db.batch([
+    db
+      .prepare("UPDATE photos SET sort_order = ?, updated_at = datetime('now') WHERE id = ?")
+      .bind(neighbour.sort_order, current.id),
+    db
+      .prepare("UPDATE photos SET sort_order = ?, updated_at = datetime('now') WHERE id = ?")
+      .bind(current.sort_order, neighbour.id),
+  ])
+  return 'moved'
+}
+
+export async function deletePhoto(db: D1Database, id: string): Promise<void> {
+  await db.prepare('DELETE FROM photos WHERE id = ?').bind(id).run()
+}

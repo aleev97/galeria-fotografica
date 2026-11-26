@@ -9,7 +9,7 @@ type Props = {
 const WIDTHS = [640, 1280]
 
 const srcSet = (id: string, format: 'avif' | 'webp') =>
-  WIDTHS.map((w) => `/sample-photos/${id}-${w}.${format} ${w}w`).join(', ')
+  WIDTHS.map((w) => `/photos/${id}-${w}.${format} ${w}w`).join(', ')
 
 export function PhotoImage({ photo, sizes, className }: Props) {
   return (
@@ -17,7 +17,7 @@ export function PhotoImage({ photo, sizes, className }: Props) {
       <source type="image/avif" srcSet={srcSet(photo.id, 'avif')} sizes={sizes} />
       <source type="image/webp" srcSet={srcSet(photo.id, 'webp')} sizes={sizes} />
       <img
-        src={`/sample-photos/${photo.id}-1280.webp`}
+        src={`/photos/${photo.id}-1280.webp`}
         alt={photo.alt}
         width={photo.width}
         height={photo.height}

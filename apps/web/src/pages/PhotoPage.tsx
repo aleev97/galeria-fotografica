@@ -1,6 +1,7 @@
 import type { PhotoDetailResponse } from '@astrogaia/shared'
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useEffect } from 'react'
+import { useAdmin } from '@/features/admin/adminContext'
 import { Link, useNavigate, useParams } from 'react-router'
 import { buttonStyles } from '@/components/buttonStyles'
 import { Container } from '@/components/Container'
@@ -14,6 +15,7 @@ import { useApi } from '@/hooks/useApi'
 export default function PhotoPage() {
   const { id = '' } = useParams()
   const navigate = useNavigate()
+  const { status: adminStatus, visitorView } = useAdmin()
   const state = useApi<PhotoDetailResponse>(id ? `/photos/${encodeURIComponent(id)}` : null)
 
   const previous = state.status === 'success' ? state.data.previous : null
@@ -93,6 +95,11 @@ export default function PhotoPage() {
           </dl>
         </div>
         <div className="flex items-center gap-3">
+          {adminStatus === 'admin' && !visitorView && (
+           <Link to={`/admin/fotos/${photo.id}`} className={buttonStyles('ghost')}>
+             Editar foto
+           </Link>
+          )}
           <FavoriteButton photoId={photo.id} title={photo.title} />
           <ShareButton title={photo.title} />
         </div>
