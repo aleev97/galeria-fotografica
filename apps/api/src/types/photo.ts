@@ -11,3 +11,9 @@ export type PhotoRow = {
   height: number
   featured: number
 }
+
+export type AdminPhotoRow = PhotoRow & {
+  published: number
+  sort_order: number
+  updated_at: string
+}

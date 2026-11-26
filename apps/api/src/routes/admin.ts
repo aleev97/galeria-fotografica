@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
-
+import { adminPhotosRoute } from './adminPhotos'
 import { SESSION_COOKIE, SESSION_HOURS, STATE_COOKIE } from '../config/auth'
 import { randomToken, sha256Hex, timingSafeEqual } from '../lib/crypto'
 import { requireAdmin } from '../middlewares/requireAdmin'
@@ -73,3 +73,5 @@ adminRoute.post('/auth/logout', requireAdmin, async (c) => {
   deleteCookie(c, SESSION_COOKIE, { path: '/' })
   return c.json({ ok: true })
 })
+
+adminRoute.route('/photos', adminPhotosRoute)

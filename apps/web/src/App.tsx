@@ -1,6 +1,11 @@
+import { MotionConfig } from 'motion/react'
 import { BrowserRouter, Route, Routes } from 'react-router'
+
+import { AdminGate } from '@/features/admin/AdminGate'
 import RootLayout from '@/layouts/RootLayout'
 import AboutPage from '@/pages/AboutPage'
+import AdminPhotoEditPage from '@/pages/AdminPhotoEditPage'
+import AdminPhotosPage from '@/pages/AdminPhotosPage'
 import BehindTheLensPage from '@/pages/BehindTheLensPage'
 import CollectionsPage from '@/pages/CollectionsPage'
 import ContactPage from '@/pages/ContactPage'
@@ -9,8 +14,6 @@ import FavoritesPage from '@/pages/FavoritesPage'
 import HomePage from '@/pages/HomePage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import PhotoPage from '@/pages/PhotoPage'
-import { MotionConfig } from 'motion/react'
-import AdminPage from '@/pages/AdminPage'
 
 export default function App() {
   return (
@@ -26,8 +29,13 @@ export default function App() {
             <Route path="favoritos" element={<FavoritesPage />} />
             <Route path="contacto" element={<ContactPage />} />
             <Route path="foto/:id" element={<PhotoPage />} />
+
+            <Route path="admin" element={<AdminGate />}>
+              <Route index element={<AdminPhotosPage />} />
+              <Route path="fotos/:id" element={<AdminPhotoEditPage />} />
+            </Route>
+
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="admin" element={<AdminPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
