@@ -77,6 +77,7 @@ export default function PhotoPage() {
         <PhotoImage
           photo={photo}
           sizes="100vw"
+          priority
           className="max-h-[75svh] w-auto max-w-full rounded-xl object-contain"
         />
       </figure>

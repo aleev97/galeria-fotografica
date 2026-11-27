@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from 'react-router'
-
+import { Suspense } from 'react'
+import { LoadingMessage } from '@/components/StatusMessage'
 import { Container } from '@/components/Container'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { SpaceBackground } from '@/components/SpaceBackground'
@@ -46,7 +47,9 @@ export default function RootLayout() {
         </header>
 
         <main className="flex-1">
-          <Outlet />
+          <Suspense fallback={<LoadingMessage />}>
+            <Outlet />
+          </Suspense>
         </main>
 
         <footer className="border-t border-moon-100/10 py-6 text-sm text-moon-300">

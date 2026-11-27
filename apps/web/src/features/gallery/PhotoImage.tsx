@@ -4,6 +4,8 @@ type Props = {
   photo: Photo
   sizes: string
   className?: string
+  /** Para la imagen principal de la pantalla: se descarga primero y sin demora */
+  priority?: boolean
 }
 
 const WIDTHS = [640, 1280]
@@ -11,7 +13,7 @@ const WIDTHS = [640, 1280]
 const srcSet = (id: string, format: 'avif' | 'webp') =>
   WIDTHS.map((w) => `/photos/${id}-${w}.${format} ${w}w`).join(', ')
 
-export function PhotoImage({ photo, sizes, className }: Props) {
+export function PhotoImage({ photo, sizes, className, priority = false }: Props) {
   return (
     <picture>
       <source type="image/avif" srcSet={srcSet(photo.id, 'avif')} sizes={sizes} />
@@ -21,7 +23,8 @@ export function PhotoImage({ photo, sizes, className }: Props) {
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
         decoding="async"
         className={className}
       />
