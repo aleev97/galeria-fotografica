@@ -9,6 +9,7 @@ import { validate } from '../middlewares/validate'
 import { createSession, deleteSession, writeAudit } from '../repositories/adminRepository'
 import { callbackQuery } from '../schemas/auth'
 import { buildAuthorizeUrl, fetchGitHubUser } from '../services/authService'
+import { rateLimit } from '../middlewares/rateLimit'
 
 export const adminRoute = new Hono<{
   Bindings: CloudflareBindings
@@ -20,6 +21,10 @@ adminRoute.use('*', async (c, next) => {
   c.header('Cache-Control', 'no-store')
 })
 adminRoute.use('*', requireSameOrigin)
+
+adminRoute.use('/auth/*', rateLimit('LOGIN_LIMITER'))
+adminRoute.use('/photos/*', rateLimit('ADMIN_LIMITER'))
+adminRoute.use('/me', rateLimit('ADMIN_LIMITER'))
 
 adminRoute.get('/auth/login', (c) => {
   const state = randomToken(16)

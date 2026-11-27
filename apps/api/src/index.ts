@@ -4,10 +4,13 @@ import { secureHeaders } from 'hono/secure-headers'
 import { collectionsRoute } from './routes/collections'
 import { photosRoute } from './routes/photos'
 import { adminRoute } from './routes/admin'
+import { rateLimit } from './middlewares/rateLimit'
 
 const app = new Hono<{ Bindings: CloudflareBindings }>()
 
 app.use('*', secureHeaders())
+app.use('/api/photos/*', rateLimit('PUBLIC_LIMITER'))
+app.use('/api/collections/*', rateLimit('PUBLIC_LIMITER'))
 
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 app.route('/api/photos', photosRoute)
